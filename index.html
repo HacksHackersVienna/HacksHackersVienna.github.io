@@ -96,9 +96,7 @@ $(document).ready(function() {
   {
     for (i in d.results) {
       e=d.results[i]
-      console.log(e);
       date=new Date(e.time);
-      console.log(date.getTime());
       html=["<div class='event'><h3>"+e.name+"</h3>",
         "<div class='date badge badge-important'>",
         date.getDate(),".",date.getMonth(),".",date.getFullYear()," ",
