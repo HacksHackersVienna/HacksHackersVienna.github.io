@@ -7,13 +7,15 @@ type="text/css" media="screen" />
 <link rel="stylesheet"
 href="vendor/bootstrap/css/bootstrap-responsive.min.css" 
 type="text/css" media="screen" />
+<link rel="stylesheet" href="css/hhvie.css" type="text/css" media="screen"
+/>
 <meta charset="utf-8">
 
 </head>
 <body>
 <div class="container">
 <div class="logo" id="top">
-<h1>Hacks/Hackers Wien</h1>
+<h1>Hacks/Hackers Vienna</h1>
 <img src="img/logo.jpg" alt="HacksHackers Vienna" />
 </div>
 <div class="navbar">
@@ -43,6 +45,8 @@ Hacks/Hackers seit 2012.
 <h2>Nächste Events
 <a href="#top"><span
 class="icon-chevron-up"></a></h2>
+<div id="upcoming-events">
+</div>
 </div>
 
 <div id="join">
@@ -85,5 +89,33 @@ class="icon-chevron-up"></a></h2>
 </div>
 <script src="vendor/js/jquery-1.10.1.min.js" ></script>
 <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script>
+
+$(document).ready(function() {
+  $.getJSON("http://api.meetup.com/2/events?group_id=5361602&status=upcoming&order=time&limited_events=False&desc=false&offset=0&format=json&page=20&fields=&sig_id=68622742&sig=3bf02c66a0b609828b13bbd2d1620e79227bb5c2&callback=?",function(d)
+  {
+    for (i in d.results) {
+      e=d.results[i]
+      console.log(e);
+      date=new Date(e.time);
+      console.log(date.getTime());
+      html=["<div class='event'><h3>"+e.name+"</h3>",
+        "<div class='date badge badge-important'>",
+        date.getDate(),".",date.getMonth(),".",date.getFullYear()," ",
+        date.getHours(),":",date.getMinutes(),
+        "</div>",
+        "<p>",
+        e.description.substring(0,1000),
+        "... ",
+        "<a href='"+e.event_url+"'>mehr</a>",
+        "<br/><a href='"+e.event_url+"' class='btn btn-success'>Anmelden!</a>",
+        "</p>",
+        "</div>"];
+      $("#upcoming-events").append(html.join(""));
+      }
+    });
+  }
+)
+</script>
 </body>
 </html>
